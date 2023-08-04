@@ -1,21 +1,21 @@
 #include "main.h"
 
 /**
- * set_bit - Sets the value of a bit to 1 at a given index.
- * @n: Pointer to the number in which to set the bit.
- * @index: The index of the bit, starting from 0 (0 is the rightmost bit).
+ * get_bit - returns the value of a bit at an index in a decimal number
+ * @n: number to search
+ * @index: index of the bit
  *
- * Return: 1 if it worked, or -1 if an error occurred.
+ * Return: value of the bit
  */
-int set_bit(unsigned long int *n, unsigned int index)
+int get_bit(unsigned long int n, unsigned int index)
 {
-	unsigned long int mask;
+	int bit_val;
 
-	if (index >= sizeof(unsigned long int) * 8)
+	if (index > 63)
 		return (-1);
 
-	mask = 1UL << index;
-	*n |= mask;
+	bit_val = (n >> index) & 1;
 
-	return (1);
+	return (bit_val);
 }
+
