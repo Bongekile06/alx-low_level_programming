@@ -1,46 +1,53 @@
-#include <stdio.h>
+#include "main.h"
 #include <stdlib.h>
 #include <unistd.h>
+#include <fcntl.h>
 
+/**
+ * read_textfile - reads a text file and prints the letters
+ * @filename: filename.
+ * @letters: numbers of letters printed.
+ *
+ * Return: numbers of letters printed. It fails, returns 0.
+ */
 ssize_t read_textfile(const char *filename, size_t letters)
 {
-	FILE *file;
-	char *buffer;
-	ssize_t bytesRead, bytesWritten;
+	int fd;
+	ssize_t nrd, nwr;
+	char *buf;
 
-	if (filename == NULL)
+	if (!filename)
 		return (0);
 
-	file = fopen(filename, "r");
-	if (file == NULL)
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
 		return (0);
 
-	buffer = malloc(sizeof(char) * (letters + 1));
-	if (buffer == NULL)
+	buf = (char *)malloc(sizeof(char) * letters);
+	if (!buf)
 	{
-		fclose(file);
+		close(fd);
 		return (0);
 	}
 
-	bytesRead = fread(buffer, sizeof(char), letters, file);
-	if (bytesRead == -1)
+	nrd = read(fd, buf, letters);
+	if (nrd == -1)
 	{
-		free(buffer);
-		fclose(file);
+		free(buf);
+		close(fd);
 		return (0);
 	}
 
-	buffer[bytesRead] = '\0';
-
-	bytesWritten = write(STDOUT_FILENO, buffer, (size_t)bytesRead);
-	if (bytesWritten == -1 || (size_t)bytesWritten != (size_t)bytesRead)
+	nwr = write(STDOUT_FILENO, buf, nrd);
+	if (nwr == -1 || (size_t)nwr != (size_t)nrd)
 	{
-		free(buffer);
-		fclose(file);
+		free(buf);
+		close(fd);
 		return (0);
 	}
 
-	free(buffer);
-	fclose(file);
-	return (bytesRead);
+	free(buf);
+	close(fd);
+
+	return (nwr);
 }
