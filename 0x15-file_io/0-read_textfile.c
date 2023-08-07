@@ -1,29 +1,46 @@
-#include "main.h"
+#include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
-/**
- * read_txtfile - Read txt file & prnt to STDOUT.
- * @filename: Txt file being read.
- * @letters: Num of letters to be read.
- *
- * Return: The actual num of bytes read and prntd. 0 if the function fails
- *         or filename is NULL.
- */
 ssize_t read_textfile(const char *filename, size_t letters)
 {
-	char *buf;
-	ssize_t fd;
-	ssize_t w;
-	ssize_t t;
+	FILE *file;
+	char *buffer;
+	ssize_t bytesRead, bytesWritten;
 
-	fd = open(filename, O_RDONLY);
-	if (fd == -1)
+	if (filename == NULL)
 		return (0);
-	buf = malloc(sizeof(char) * letters);
-	t = read(fd, buf, letters);
-	w = write(STDOUT_FILENO, buf, t);
 
-	free(buf);
-	close(fd);
-	return (w);
+	file = fopen(filename, "r");
+	if (file == NULL)
+		return (0);
+
+	buffer = malloc(sizeof(char) * (letters + 1));
+	if (buffer == NULL)
+	{
+		fclose(file);
+		return (0);
+	}
+
+	bytesRead = fread(buffer, sizeof(char), letters, file);
+	if (bytesRead == -1)
+	{
+		free(buffer);
+		fclose(file);
+		return (0);
+	}
+
+	buffer[bytesRead] = '\0';
+
+	bytesWritten = write(STDOUT_FILENO, buffer, (size_t)bytesRead);
+	if (bytesWritten == -1 || (size_t)bytesWritten != (size_t)bytesRead)
+	{
+		free(buffer);
+		fclose(file);
+		return (0);
+	}
+
+	free(buffer);
+	fclose(file);
+	return (bytesRead);
 }
