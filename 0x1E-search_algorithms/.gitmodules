@@ -1,0 +1,24 @@
+[submodule "0x11-printf"]
+	path = 0x11-printf
+	url = https://github.com/Bongekile06/printf.git
+[submodule "0X16-simple_shell"]
+	path = 0X16-simple_shell
+	url = https://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@github.com/Bongekile06/simple_shell.git
+[submodule "0x16-simple_shell"]
+	path = 0x16-simple_shell
+	url = https://github.com/Bongekile06/simple_shell.git
+[submodule "0x19-monty-stacks_queues_LIFO_FIFO"]
+	path = 0x19-monty-stacks_queues_LIFO_FIFO
+	url = https://github.com/Bongekile06/monty.git
+[submodule "0x1B-Sorting_algorithms_"]
+	path = 0x1B-Sorting_algorithms_
+	url = https://github.com/Bongekile06/sorting_algorithms.git
+[submodule "0x1B-Sorting_algorithms_Big_O"]
+	path = 0x1B-Sorting_algorithms_Big_O
+	url = https://github.com/Bongekile06/sorting_algorithms.git
+[submodule "0x1B-sorting_algorithms_Big_O"]
+	path = 0x1B-sorting_algorithms_Big_O
+	url = https://github.com/Bongekile06/sorting_algorithms.git
+[submodule "0x1D-binary_trees"]
+	path = 0x1D-binary_trees
+	url = https://github.com/Bongekile06/binary_trees.git
